@@ -35,13 +35,13 @@ You can use the [PathfinderDemo.cs](PathfinderDemo.cs) as an example template to
 
 You can access the pathfinder from any MonoBehaviour script by using the TilePathFinder namespace.
 
-```
+```cs
 using TilePathFinder;
 ```
 
 In the Start() function create and store a new pathFinder object passing it your tile grid object, a string containing your blocking layers tag and a string containing your floors tag.
 
-```
+```cs
 pathFinder = new TilePathfinder(GridObject, "Blocking", "Floor");
 ```
 
@@ -50,13 +50,13 @@ This will create a nodegrid based on the tilemap layers found in the grid object
 Using the new pathfinder object you can now call the FindPath method to get an ordered list of tile locations that lead to the target location.
 The FindPath method requires a starting point (Vector3Int) and an endpoint (Vector3Int) as input, and will return an ordered list of points that (List<Vector3Int>) make a path from the start point to the endpoint.
 
-```
+```cs
 List<Vector3Int> path = TilePathFinder.FindPath(startPoint, endPoint);
 ```
 
 The unity method WorldToCell() can be used to convert a world position to a cell position (Vector3Int) to be used as input.
 
-```
+```cs
 Vector3Int startPoint = TileGrid.WorldToCell(transform.position);
 ```
 
