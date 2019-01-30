@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -19,13 +19,15 @@ namespace TilePathFinder
         public string floorTag = "Floor";
         public Vector2Int vGridWorldSize;
         public Node[,] nodeArray;
+
         public int xOffset;
         public int yOffset;
 
         public void CreateGrid()
         {
+            // Get all tilemaps
             Tilemap[] allTileMaps = tileGrid.GetComponentsInChildren<Tilemap>();
-            // Check for largest map
+            // Check for largest tilemap
             int largestX = 0, largestY = 0;
             foreach (Tilemap map in allTileMaps)
             {
@@ -40,19 +42,24 @@ namespace TilePathFinder
                 if (map.cellBounds.yMin < yOffset)
                     yOffset = map.cellBounds.yMin;
             }
+            // Setup variables
             nodeArray = new Node[largestX, largestY];
             vGridWorldSize.x = largestX;
             xOffset = xOffset * -1;
             yOffset = yOffset * -1;
             vGridWorldSize.y = largestY;
+
+            // Add nodes
             foreach (Tilemap map in allTileMaps)
             {
                 foreach (var pos in map.cellBounds.allPositionsWithin)
                 {
                     int gridPosX = pos.x + xOffset;
                     int gridPosY = pos.y + yOffset;
+                    // Make new node
                     if (nodeArray[gridPosX, gridPosY] == null)
                     {
+                        // Check tag
                         if (map.tag == wallTag)
                         {
                             nodeArray[gridPosX, gridPosY] = new Node(gridPosX, gridPosY, false);
@@ -62,6 +69,7 @@ namespace TilePathFinder
                             nodeArray[gridPosX, gridPosY] = new Node(gridPosX, gridPosY, true);
                         }
                     }
+                    // Check existing node
                     else if (map.tag == wallTag || nodeArray[gridPosX, gridPosY].walkable == false || map.tag != floorTag)
                     {
                         nodeArray[gridPosX, gridPosY].walkable = false;
