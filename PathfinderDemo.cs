@@ -7,11 +7,11 @@ public class PathfinderDemo : MonoBehaviour
 {
 
     public Grid TileGrid;
-    private TilePathfinder pathFinder;
+    private Pathfinder pathFinder;
 
     void Start()
     {
-        pathFinder = new TilePathfinder(TileGrid, "Blocking", "Floor");
+        pathFinder = new Pathfinder(TileGrid, "Blocking", "Floor");
     }
 
     void Update()
