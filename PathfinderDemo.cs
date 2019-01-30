@@ -7,7 +7,7 @@ public class PathfinderDemo : MonoBehaviour
 {
 
     public Grid TileGrid;
-    private Pathfinder pathFinder;
+    public Pathfinder pathFinder;
 
     void Start()
     {
@@ -19,11 +19,10 @@ public class PathfinderDemo : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int endPoint = TileObject.WorldToCell(mousePos);
-            Vector3Int startPoint = TileObject.WorldToCell(transform.position);
+            Vector3Int endPoint = TileGrid.WorldToCell(mousePos);
+            Vector3Int startPoint = TileGrid.WorldToCell(transform.position);
 
             List<Vector3Int> path = pathFinder.FindPath(startPoint, endPoint);
-            playerMover.Path = path;
 
             int steps = 0;
             foreach (Vector3Int step in path)
